@@ -3753,16 +3753,16 @@
             
             .video-grid {
                 display: grid;
-                grid-template-columns: 1fr !important;
-                gap: 10px;
+                grid-template-columns: repeat(3, 1fr) !important;
+                gap: 8px;
             }
             
             .video-item {
                 aspect-ratio: 9/16;
-                border-radius: 8px;
+                border-radius: 6px;
                 overflow: hidden;
                 position: relative;
-                min-height: 200px;
+                min-height: auto;
             }
             
             .video-item-cover {
@@ -3982,6 +3982,24 @@
             .loader-brand {
                 font-size: 28px !important;
                 letter-spacing: 6px !important;
+            }
+            
+            /* 加载页信息居中显示 */
+            .loader-content {
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                right: auto;
+                bottom: auto;
+                transform: translate(-50%, -50%);
+                align-items: center;
+                gap: 16px;
+            }
+            
+            .loader-text {
+                font-size: 14px;
+                letter-spacing: 4px;
+                margin-top: 4px;
             }
         }
 
