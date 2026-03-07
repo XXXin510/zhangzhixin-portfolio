@@ -3742,10 +3742,12 @@
                 color: #ff6a00;
             }
             
-            .video-grid {
-                display: grid;
+            /* 展开区域的视频网格 */
+            .work-expanded .video-grid {
+                display: grid !important;
                 grid-template-columns: repeat(3, 1fr) !important;
-                gap: 8px;
+                gap: 8px !important;
+                width: 100% !important;
             }
             
             .video-item {
@@ -3954,14 +3956,16 @@
                 font-size: 50px !important;
             }
 
-            /* 保持一行3个布局 */
+            /* 保持一行3个布局 - 480px */
+            .work-expanded .video-grid,
             .video-grid {
                 grid-template-columns: repeat(3, 1fr) !important;
-                gap: 6px;
+                gap: 6px !important;
             }
+            .work-expanded .video-grid-sports,
             .video-grid-sports {
                 grid-template-columns: repeat(2, 1fr) !important;
-                gap: 8px;
+                gap: 8px !important;
             }
 
             .contact h2 {
