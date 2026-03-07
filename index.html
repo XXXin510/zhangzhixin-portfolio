@@ -410,15 +410,16 @@
             z-index: 2;
         }
 
-        /* Loader Content - Cinematic */
+        /* Loader Content - 全平台居中 */
         .loader-content {
             position: fixed;
-            bottom: 60px;
-            right: 60px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             z-index: 10;
             display: flex;
             flex-direction: column;
-            align-items: flex-end;
+            align-items: center;
             gap: 20px;
         }
 
@@ -2301,7 +2302,7 @@
 
         .video-grid {
             display: grid;
-            grid-template-columns: repeat(6, 1fr);
+            grid-template-columns: repeat(3, 1fr);
             gap: 10px;
             padding: 0 0 20px;
         }
@@ -2402,10 +2403,10 @@
             text-shadow: 0 2px 4px rgba(0,0,0,0.8);
         }
 
-        /* 历史类竖版封面适配 - 完全展示 */
+        /* 历史类竖版封面适配 - 一行3个 */
         .video-grid-history {
-            grid-template-columns: repeat(4, 1fr);
-            gap: 15px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
         }
 
         .video-grid-history .video-item {
@@ -2418,10 +2419,10 @@
             background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
         }
 
-        /* 体育类横版封面适配 - 一行3个 */
+        /* 体育类横版封面适配 - 一行2个 */
         .video-grid-sports {
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
         }
 
         .video-grid-sports .video-item {
@@ -2434,29 +2435,19 @@
             background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
         }
 
-        @media (max-width: 1200px) {
+        /* 所有端统一：体育类一行2个，其他一行3个 */
+        @media (max-width: 768px) {
+            .video-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 8px;
+            }
             .video-grid-history {
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns: repeat(3, 1fr);
+                gap: 8px;
             }
             .video-grid-sports {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (max-width: 768px) {
-            .video-grid-history {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 10px;
-            }
-            .video-grid-history .video-item {
-                min-height: 150px;
-            }
-            .video-grid-sports {
-                grid-template-columns: 1fr;
-                gap: 15px;
-            }
-            .video-grid-sports .video-item {
-                min-height: 200px;
             }
         }
 
@@ -3210,15 +3201,15 @@
         }
 
         @media (max-width: 480px) {
+            /* 保持一行3个/2个布局，不改为单列 */
             .video-grid,
-            .video-grid-history,
-            .video-grid-sports {
-                grid-template-columns: 1fr;
-                gap: 15px;
+            .video-grid-history {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 6px;
             }
-
-            .video-item {
-                min-height: 200px;
+            .video-grid-sports {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
             }
         }
 
@@ -3984,23 +3975,7 @@
                 letter-spacing: 6px !important;
             }
             
-            /* 加载页信息居中显示 */
-            .loader-content {
-                position: fixed;
-                top: 50%;
-                left: 50%;
-                right: auto;
-                bottom: auto;
-                transform: translate(-50%, -50%);
-                align-items: center;
-                gap: 16px;
-            }
-            
-            .loader-text {
-                font-size: 14px;
-                letter-spacing: 4px;
-                margin-top: 4px;
-            }
+
         }
 
         @media (max-width: 1024px) {
