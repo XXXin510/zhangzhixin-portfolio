@@ -978,114 +978,15 @@
             opacity: 0.02;
         }
 
-        /* Navigation */
+        /* Navigation - 已删除 */
         nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            padding: 20px 60px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(13, 13, 13, 0.8);
-            backdrop-filter: blur(20px) saturate(180%);
-            -webkit-backdrop-filter: blur(20px) saturate(180%);
-            z-index: 100;
-            border-bottom: 1px solid rgba(255, 106, 0, 0.15);
-            transition: background 0.4s var(--ease-out), padding 0.3s, border-color 0.3s;
+            display: none !important;
         }
 
-        nav.scrolled {
-            padding: 14px 60px;
-            background: rgba(13, 13, 13, 0.92);
-            border-bottom-color: rgba(255, 106, 0, 0.25);
-        }
-
-        nav.scrolled .logo {
-            font-size: 20px;
-        }
-
-        .logo {
-            font-family: 'Oswald', sans-serif;
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--warning-orange);
-            letter-spacing: 8px;
-            text-transform: uppercase;
-            position: relative;
-            transition: all 0.3s;
-            text-shadow: 0 0 20px rgba(255, 106, 0, 0.4);
-        }
-
-        .logo::before {
-            content: '◇';
-            position: absolute;
-            left: -22px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 16px;
-            color: var(--dim-gray);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 50px;
-            list-style: none;
-        }
-
-        .nav-links a {
-            font-family: 'Share Tech Mono', monospace;
-            font-size: 17px;
-            color: var(--industrial-white);
-            text-decoration: none;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            transition: color 0.3s, text-shadow 0.3s;
-            position: relative;
-            padding: 0;
-            line-height: 1.5;
-        }
-
-        .nav-links a:hover {
-            color: var(--warning-orange);
-            text-shadow: 0 0 25px rgba(255, 106, 0, 0.7);
-        }
-
-        .nav-links a.active {
-            color: var(--warning-orange);
-        }
-
-        .menu-toggle {
-            display: none;
-            flex-direction: column;
-            gap: 6px;
-            cursor: pointer;
-            padding: 5px;
-        }
-
-        .menu-toggle span {
-            width: 26px;
-            height: 2px;
-            background: var(--warning-orange);
-            transition: 0.3s var(--ease-out);
-        }
-
-        .menu-toggle.active span:nth-child(1) {
-            transform: rotate(45deg) translate(5px, 6px);
-        }
-
-        .menu-toggle.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .menu-toggle.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(5px, -6px);
-        }
-
-        /* Hero Section */
+        /* Hero Section - 调整padding */
         .hero {
-            height: 100vh;
+            min-height: 100vh;
+            padding: 40px 20px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -4209,27 +4110,7 @@
         <!-- Subtle Texture Overlay -->
         <div class="texture-overlay"></div>
 
-        <nav>
-            <div class="logo">XXXin</div>
-            <ul class="nav-links">
-                <li><a href="#about" data-text="关于">关于</a></li>
-                <li><a href="#works" data-text="作品">作品</a></li>
-                <li><a href="#achievements" data-text="成就">成就</a></li>
-                <li><a href="#contact" data-text="联系">联系</a></li>
-            </ul>
-            <div class="menu-toggle" onclick="toggleMenu()">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </nav>
 
-        <div class="mobile-menu" id="mobileMenu">
-            <a href="#about" onclick="toggleMenu()">关于</a>
-            <a href="#works" onclick="toggleMenu()">作品</a>
-            <a href="#achievements" onclick="toggleMenu()">成就</a>
-            <a href="#contact" onclick="toggleMenu()">联系</a>
-        </div>
 
         <section class="hero">
             <div class="hero-glow-ring"></div>
@@ -5340,13 +5221,6 @@
         }
 
         // ========== MAIN FUNCTIONALITY ==========
-        function toggleMenu() {
-            const menu = document.getElementById('mobileMenu');
-            const toggle = document.querySelector('.menu-toggle');
-            menu.classList.toggle('active');
-            toggle.classList.toggle('active');
-        }
-
         function toggleWorkCard(card) {
             card.classList.toggle('active');
         }
@@ -5414,13 +5288,6 @@
         const backToTop = document.getElementById('backToTop');
 
         window.addEventListener('scroll', () => {
-            const nav = document.querySelector('nav');
-            if (window.scrollY > 80) {
-                nav.classList.add('scrolled');
-            } else {
-                nav.classList.remove('scrolled');
-            }
-            
             // Update scroll progress bar
             const scrollTop = window.scrollY;
             const docHeight = document.documentElement.scrollHeight - window.innerHeight;
@@ -5445,22 +5312,7 @@
                 }
             });
 
-            // Update active nav link
-            const sections = document.querySelectorAll('section[id]');
-            const navLinks = document.querySelectorAll('.nav-links a');
-            let current = '';
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop - 150;
-                if (scrollTop >= sectionTop) {
-                    current = section.getAttribute('id');
-                }
-            });
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === '#' + current) {
-                    link.classList.add('active');
-                }
-            });
+
         });
 
         function scrollToTop() {
