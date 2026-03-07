@@ -256,14 +256,11 @@
             transform: scaleX(0) translateZ(0);
         }
 
-        /* Staggered delays for slices - 更流畅的波浪效果 */
+        /* Staggered delays for slices - 简化为4个 */
         .shutter-slice:nth-child(1) { transition-delay: 0s; }
-        .shutter-slice:nth-child(2) { transition-delay: 0.04s; }
-        .shutter-slice:nth-child(3) { transition-delay: 0.08s; }
-        .shutter-slice:nth-child(4) { transition-delay: 0.12s; }
-        .shutter-slice:nth-child(5) { transition-delay: 0.16s; }
-        .shutter-slice:nth-child(6) { transition-delay: 0.20s; }
-        .shutter-slice:nth-child(7) { transition-delay: 0.24s; }
+        .shutter-slice:nth-child(2) { transition-delay: 0.06s; }
+        .shutter-slice:nth-child(3) { transition-delay: 0.12s; }
+        .shutter-slice:nth-child(4) { transition-delay: 0.18s; }
 
         /* Radial Wipe Overlay */
         .radial-wipe {
@@ -1419,12 +1416,13 @@
             );
         }
 
-        /* Sections */
+        /* Sections - 添加 containment 优化 */
         section {
             padding: 100px 48px;
             max-width: 1400px;
             margin: 0 auto;
             position: relative;
+            contain: layout style paint;
         }
 
         section.hero,
@@ -2946,12 +2944,14 @@
             position: fixed;
             top: 0;
             left: 0;
-            width: 0%;
+            width: 100%;
             height: 3px;
             background: var(--warning-orange);
             z-index: 1000;
             box-shadow: 0 0 20px var(--warning-orange);
-            transition: width 0.1s linear;
+            transform: scaleX(0);
+            transform-origin: left;
+            will-change: transform;
         }
 
         /* Back to Top Button */
@@ -4061,11 +4061,8 @@
         </div>
     </div>
     
-    <!-- Cinematic Transition Elements -->
+    <!-- Cinematic Transition Elements - 移动端简化 -->
     <div class="shutter-container" id="shutterContainer">
-        <div class="shutter-slice"></div>
-        <div class="shutter-slice"></div>
-        <div class="shutter-slice"></div>
         <div class="shutter-slice"></div>
         <div class="shutter-slice"></div>
         <div class="shutter-slice"></div>
@@ -5040,7 +5037,10 @@
                 setTimeout(() => {
                     loader.style.display = 'none';
                     shutterContainer.style.display = 'none';
-                    initParticleGrid();
+                    // 仅在非移动端初始化粒子网格
+                    if (!window.matchMedia('(max-width: 768px)').matches) {
+                        initParticleGrid();
+                    }
                 }, 400);
             }, 800);
         }
@@ -5283,37 +5283,64 @@
             });
         });
 
-        // ========== SCROLL PROGRESS BAR ==========
+        // ========== SCROLL PROGRESS BAR - 性能优化版 ==========
         const scrollProgress = document.getElementById('scrollProgress');
         const backToTop = document.getElementById('backToTop');
-
-        window.addEventListener('scroll', () => {
-            // Update scroll progress bar
+        
+        // 检测是否为移动端
+        const isMobile = window.matchMedia('(max-width: 768px)').matches;
+        
+        // 使用 requestAnimationFrame 节流
+        let ticking = false;
+        let lastScrollTop = 0;
+        
+        function updateScrollEffects() {
             const scrollTop = window.scrollY;
+            
+            // 只有滚动距离变化超过5px才更新（减少计算）
+            if (Math.abs(scrollTop - lastScrollTop) < 5) {
+                ticking = false;
+                return;
+            }
+            lastScrollTop = scrollTop;
+            
+            // Update scroll progress bar - 使用 transform 代替 width（GPU加速）
             const docHeight = document.documentElement.scrollHeight - window.innerHeight;
             const scrollPercent = (scrollTop / docHeight) * 100;
-            scrollProgress.style.width = scrollPercent + '%';
-            
-            // Show/hide back to top button
-            if (scrollTop > 500) {
-                backToTop.classList.add('visible');
-            } else {
-                backToTop.classList.remove('visible');
+            if (scrollProgress) {
+                scrollProgress.style.transform = `scaleX(${scrollPercent / 100})`;
             }
             
-            // Parallax for section numbers
-            const sectionNumbers = document.querySelectorAll('.section-number');
-            sectionNumbers.forEach(num => {
-                const speed = 0.1;
-                const rect = num.parentElement.getBoundingClientRect();
-                if (rect.top < window.innerHeight && rect.bottom > 0) {
-                    const offset = (window.innerHeight - rect.top) * speed * 0.1;
-                    num.style.transform = `translateY(${offset}px)`;
+            // Show/hide back to top button
+            if (backToTop) {
+                if (scrollTop > 500) {
+                    backToTop.classList.add('visible');
+                } else {
+                    backToTop.classList.remove('visible');
                 }
-            });
-
-
-        });
+            }
+            
+            // 视差效果 - 仅在非移动端执行
+            if (!isMobile) {
+                const sectionNumbers = document.querySelectorAll('.section-number');
+                sectionNumbers.forEach(num => {
+                    const rect = num.parentElement.getBoundingClientRect();
+                    if (rect.top < window.innerHeight && rect.bottom > 0) {
+                        const offset = (window.innerHeight - rect.top) * 0.01;
+                        num.style.transform = `translateY(${offset}px)`;
+                    }
+                });
+            }
+            
+            ticking = false;
+        }
+        
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                requestAnimationFrame(updateScrollEffects);
+                ticking = true;
+            }
+        }, { passive: true }); // 使用 passive 监听器提升滚动性能
 
         function scrollToTop() {
             window.scrollTo({
