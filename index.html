@@ -2403,9 +2403,9 @@
             text-shadow: 0 2px 4px rgba(0,0,0,0.8);
         }
 
-        /* 历史类竖版封面适配 - 一行3个 */
+        /* 历史类竖版封面适配 - 一行2个 */
         .video-grid-history {
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(2, 1fr);
             gap: 10px;
         }
 
@@ -2442,7 +2442,7 @@
                 gap: 8px;
             }
             .video-grid-history {
-                grid-template-columns: repeat(3, 1fr);
+                grid-template-columns: repeat(2, 1fr);
                 gap: 8px;
             }
             .video-grid-sports {
@@ -3204,7 +3204,7 @@
             /* 保持一行3个/2个布局，不改为单列 */
             .video-grid,
             .video-grid-history {
-                grid-template-columns: repeat(3, 1fr);
+                grid-template-columns: repeat(2, 1fr);
                 gap: 6px;
             }
             .video-grid-sports {
@@ -3963,7 +3963,9 @@
                 gap: 6px !important;
             }
             .work-expanded .video-grid-sports,
-            .video-grid-sports {
+            .video-grid-sports,
+            .work-expanded .video-grid-history,
+            .video-grid-history {
                 grid-template-columns: repeat(2, 1fr) !important;
                 gap: 8px !important;
             }
