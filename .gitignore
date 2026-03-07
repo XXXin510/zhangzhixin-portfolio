@@ -1,0 +1,38 @@
+# 视频文件不上传Git
+works/**/*.mp4
+assets/videos/**/*.mp4
+
+# 图片文件（使用云端链接，不上传Git）
+works/**/*.png
+works/**/*.jpg
+works/**/*.jpeg
+works/**/*.webp
+works/**/*.gif
+assets/images/**/*.png
+assets/images/**/*.jpg
+assets/images/**/*.jpeg
+assets/images/**/*.webp
+assets/images/**/*.gif
+assets/*.png
+assets/*.jpg
+assets/*.jpeg
+assets/*.webp
+assets/*.gif
+
+backup/
+.trae/
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# 编辑器
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# 临时文件
+*.tmp
+*.temp
+*.log
